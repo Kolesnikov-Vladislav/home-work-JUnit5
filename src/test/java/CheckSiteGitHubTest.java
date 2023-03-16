@@ -1,8 +1,8 @@
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -20,17 +20,26 @@ public class CheckSiteGitHubTest {
             "Allure-Java"
     })
     @ParameterizedTest(name="Проверка страницы репозитория {0} на наличие страницы Code")
-    public void checkHeaderRepoTest(String nameRepo){
+    public void checkHeaderRepoTestTabCode(String nameRepo){
         $("[placeholder='Search GitHub']").click();
         $("[placeholder='Search GitHub']").setValue(nameRepo).pressEnter();
         $$("ul.repo-list li").first().$("a").click();
         $("#code-tab").shouldBe(Condition.visible);
         sleep(4000);
+        //issues-tab
+    }
+    @CsvSource({
+            "Selenide,         #issues-tab",
+            "Allure-Java,       #issues-tab",
+    })
+    @ParameterizedTest(name="Проверка страницы репозитория {0} на наличие страницы Code")
+    public void checkHeaderRepoTestTabIssue(String nameRepo, String tab){
+        $("[placeholder='Search GitHub']").click();
+        $("[placeholder='Search GitHub']").setValue(nameRepo).pressEnter();
+        $$("ul.repo-list li").first().$("a").click();
+        $(tab).shouldBe(Condition.visible);
+        sleep(4000);
+        //issues-tab
     }
 }
 
-
-// $("#wiki-tab").click();
-//        $("#wiki-pages-filter").setValue("SoftAssertions");
-//        $(byText("SoftAssertions")).shouldBe(Condition.visible).click();
-//        $(".markdown-body").shouldHave(Condition.text("Using JUnit5 extend test class"));
