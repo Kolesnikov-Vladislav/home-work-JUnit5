@@ -1,8 +1,11 @@
 # Compiled class file
-*.class
-/.idea
 /.gradle
-/gradlew.bat
+/.idea
+/.build
+/.build/reports
+/gradle
+!**/src/test/**
+!**/src/test/resources**
 # Log file
 *.log
 
